@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"workshoptdd/handler"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -20,6 +21,11 @@ func InitRoutes(db *gorm.DB) *gin.Engine {
 			"message": "OK",
 		})
 	})
+
+	taskHandler := handler.NewHandler(db)
+	app.POST("/tasks", taskHandler.CreateTask)
+	app.GET("/tasks", taskHandler.GetTasks)
+	app.DELETE("/tasks/:id", taskHandler.DeleteTask)
 
 	return app
 }

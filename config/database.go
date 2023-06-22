@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"workshoptdd/entity"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -12,6 +13,8 @@ func InitDatabase(dsn string) *gorm.DB {
 	if err != nil {
 		log.Fatal("failed to connect to database!")
 	}
+
+	db.AutoMigrate(&entity.Task{})
 
 	return db
 }
